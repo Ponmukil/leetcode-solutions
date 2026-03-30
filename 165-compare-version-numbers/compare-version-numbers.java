@@ -7,7 +7,6 @@ class Solution {
         while(i < v1.length && j < v2.length){
             int t1 = Integer.parseInt(v1[i]);
             int t2 = Integer.parseInt(v2[j]);
-            System.out.println(t1 + " " +t2);
             if(t1 < t2) return -1;
             else if(t1 > t2) return 1;
             i++;
