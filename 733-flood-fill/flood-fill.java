@@ -3,7 +3,6 @@ class Solution {
         if(sr < 0 || sc < 0 || sr >= image.length || sc >= image[0].length) return;
         if(image[sr][sc] != si) return;
         image[sr][sc] = color;
-        System.out.println(sr + " " + sc);
         dfs(image, sr+1, sc, color, si);
         dfs(image, sr-1, sc, color, si);
         dfs(image, sr, sc+1, color, si);
