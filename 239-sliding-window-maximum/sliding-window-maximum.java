@@ -1,26 +1,19 @@
-class Pair{
-    int key;
-    int val;
-    public Pair(int key, int val){
-        this.key = key;
-        this.val = val;
-    }
-}
 class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
+        Deque<Integer> dq = new ArrayDeque<>();
         int n = nums.length;
-        int[] out = new int[n-k+1];
-        PriorityQueue<Pair> pq = new PriorityQueue<>((a, b) -> b.val - a.val);
+        int[] ans = new int[n-k+1];
 
         for(int i = 0; i < n; i++){
-            pq.add(new Pair(i, nums[i]));
-            if(i >= k-1 ){
-                while(pq.peek().key <= i-k){
-                    pq.poll();
-                }
-                out[i+1-k] = pq.peek().val;
-            }
+            if(!dq.isEmpty() && dq.peekFirst() <= i-k) dq.pollFirst();
+
+            while(!dq.isEmpty() && nums[dq.peekLast()] <= nums[i]) dq.pollLast();
+
+            dq.add(i);
+
+            if(i >= k-1) ans[i-k+1] = nums[dq.peekFirst()]; 
         }
-        return out;
+
+        return ans;
     }
 }
