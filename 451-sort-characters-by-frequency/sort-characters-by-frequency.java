@@ -1,29 +1,28 @@
-class Pair{
-    char key;
-    int val;
-    Pair(char key, int val){
-        this.key = key;
-        this.val = val;
-    }
-}
 class Solution {
     public String frequencySort(String s) {
         HashMap<Character, Integer> map = new HashMap<>();
-        PriorityQueue<Pair> pq = new PriorityQueue<>((a, b) -> b.val - a.val);
-        for(int i = 0; i < s.length(); i++){
+        int n = s.length();
+        for(int i = 0; i < n; i++){
             map.put(s.charAt(i), map.getOrDefault(s.charAt(i), 0) + 1);
         }
+        List<Character>[] bucket = new List[n+1];
         for(char ch : map.keySet()){
-            pq.add(new Pair(ch, map.get(ch)));
+            int freq = map.get(ch);
+            if(bucket[freq] == null){
+                bucket[freq] = new ArrayList<>();
+            }
+            bucket[freq].add(ch);
         }
-        String ans = "";
-        while(!pq.isEmpty()){
-            Pair p = pq.poll();
-            for(int i = 0; i < p.val; i++){
-                ans += p.key;
+        StringBuilder ans = new StringBuilder();
+        for(int i = n; i >= 0; i--){
+            if(bucket[i] != null){
+                for(char ch : bucket[i]){
+                    for(int j = 0; j < i; j++){
+                    ans.append(ch);
+                    }
+                }
             }
         }
-        return ans;
-
+        return ans.toString();
     }
 }
