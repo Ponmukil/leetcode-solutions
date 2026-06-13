@@ -9,17 +9,14 @@
  * }
  */
 class Solution {
-    ListNode head = null;
-    public ListNode reverseLL(ListNode head){
-        if(head.next == null){
-            this.head = head;
-            return this.head;
-        }
-        return reverseLL(head.next).next = head; 
-    }
     public ListNode reverseList(ListNode head) {
-        if(head == null) return null;
-        reverseLL(head).next = null;
-        return this.head;
+        ListNode prev = null;
+        while(head != null){
+            ListNode next = head.next;
+            head.next = prev;
+            prev = head;
+            head = next;
+        }
+        return prev;
     }
 }
