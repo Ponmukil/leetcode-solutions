@@ -51,9 +51,9 @@ class Solution {
                     }
                 }    
             }
-            if(infected) time++;
+             time++;
         }
-        if(freshOrange == 0) return time;
+        if(freshOrange == 0) return time-1;
         return -1;
     }
 }
