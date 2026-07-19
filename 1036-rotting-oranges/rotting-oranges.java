@@ -5,48 +5,55 @@ class Pair{
         row = r;
         col = c;
     }
+    public String toString(){
+        return row + " " + col;
+    }
 }
-
-class Solution {    
+class Solution {
     public int orangesRotting(int[][] grid) {
-        int rows = grid.length;
-        int cols = grid[0].length;
+        int m = grid.length;
+        int n = grid[0].length;
+
+        boolean[][] visited = new boolean[m][n];
         Queue<Pair> q = new LinkedList<>();
+        int[][] directions = {{0,-1},{-1,0},{0,1},{1,0}};
+        int time = 0;
+        int freshOrange = 0;
 
-        int fresh = 0;
-        for(int i = 0; i < rows; i++){
-            for(int j = 0; j < cols; j++){
-                if(grid[i][j] == 2) q.add(new Pair(i,j));
-                if(grid[i][j] == 1) fresh++;
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                if(grid[i][j] == 2){
+                    q.add(new Pair(i,j));
+                    visited[i][j] = true;
+                }
+                else if(grid[i][j] == 1) freshOrange++;
             }
-
         }
-        if(fresh == 0) return 0;
+        if(freshOrange ==  0) return 0;
 
-        int[] cr = {-1,0,1,0};
-        int[] cc = {0,-1,0,1};
-
-
-        int min = 0;
         while(!q.isEmpty()){
+            System.out.println(q);
             int size = q.size();
-            boolean rotten = false;
+            boolean infected = false;
+
             for(int i = 0; i < size; i++){
                 Pair p = q.poll();
-                for(int j = 0; j < cr.length; j++){
-                    int nr = p.row + cr[j];
-                    int nc = p.col + cc[j];
-                    if(nr >= 0 && nr < rows && nc >=0 && nc < cols && grid[nr][nc] == 1){
-                        grid[nr][nc] = 2;
-                        q.add(new Pair(nr,nc));
-                        rotten = true;
-                        fresh--;
+
+                for(int[] dir : directions){
+                    int r = p.row + dir[0];
+                    int c = p.col + dir[1];
+
+                    if(r >=0 && c >=0 && r <= m-1 && c <= n-1 && !visited[r][c] && grid[r][c] == 1){
+                        visited[r][c] = true;
+                        freshOrange--;
+                        q.add(new Pair(r, c));
+                        infected = true;
                     }
-                }
+                }    
             }
-            if(rotten) min++;
+            if(infected) time++;
         }
-        if(fresh ==  0) return min;
-        else return -1;
+        if(freshOrange == 0) return time;
+        return -1;
     }
 }
