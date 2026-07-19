@@ -5,9 +5,6 @@ class Pair{
         row = r;
         col = c;
     }
-    public String toString(){
-        return row + " " + col;
-    }
 }
 class Solution {
     public int shortestPathBinaryMatrix(int[][] grid) {
@@ -26,7 +23,6 @@ class Solution {
 
         while(!q.isEmpty()){
             int size = q.size();
-            System.out.println(q);
             for(int i = 0; i < size; i++){
                 Pair p = q.poll();
                 if(p.row == n-1 && p.col == n-1) return ans;
