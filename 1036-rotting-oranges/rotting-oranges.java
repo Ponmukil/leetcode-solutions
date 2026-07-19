@@ -32,7 +32,6 @@ class Solution {
         if(freshOrange ==  0) return 0;
 
         while(!q.isEmpty()){
-            System.out.println(q);
             int size = q.size();
             boolean infected = false;
 
